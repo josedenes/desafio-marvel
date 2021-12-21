@@ -1,7 +1,5 @@
 package br.com.zup.desafio.marvel.resources;
 
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.zup.desafio.marvel.dto.UsuarioDTO;
 import br.com.zup.desafio.marvel.entities.Usuario;
 import br.com.zup.desafio.marvel.services.UsuarioService;
 
@@ -22,8 +21,8 @@ public class UsuarioResource {
 	private UsuarioService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> findAll(){
-		List<Usuario> list = service.findAll();
+	public ResponseEntity<List<UsuarioDTO>> findAll(){
+		List<UsuarioDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	

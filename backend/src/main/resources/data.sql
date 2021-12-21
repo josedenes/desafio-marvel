@@ -1,0 +1,1 @@
+INSERT INTO tb_usuario (nome, email, cpf, data_nascimento ) VALUES ('jose', 'jose@gmail.com', '000.000.000-00', NOW());

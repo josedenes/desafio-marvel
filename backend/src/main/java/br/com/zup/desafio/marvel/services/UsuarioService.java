@@ -1,10 +1,13 @@
 package br.com.zup.desafio.marvel.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.zup.desafio.marvel.dto.UsuarioDTO;
 import br.com.zup.desafio.marvel.entities.Usuario;
 import br.com.zup.desafio.marvel.repositories.UsuarioRepository;
 
@@ -14,8 +17,9 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
-	public List<Usuario> findAll(){
-		return repository.findAll();
+	@Transactional(readOnly = true)
+	public List<UsuarioDTO> findAll(){
+		List<Usuario> list = repository.findAll();
+		return list.stream().map(x -> new UsuarioDTO(x)).collect(Collectors.toList());
 	}
-	
 }
