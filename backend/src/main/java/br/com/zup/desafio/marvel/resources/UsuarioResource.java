@@ -4,24 +4,29 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zup.desafio.marvel.entities.Usuario;
+import br.com.zup.desafio.marvel.services.UsuarioService;
 
 
 @RestController
 @RequestMapping(value = "/usuarios")
 public class UsuarioResource {
 	
+	@Autowired
+	private UsuarioService service;
+	
 	@GetMapping
 	public ResponseEntity<List<Usuario>> findAll(){
-		List<Usuario> list = new ArrayList<>();
-		list.add(new Usuario(1L, "jose", "jose@gmail.com", "000.000.000.00",Instant.now()));
+		List<Usuario> list = service.findAll();
 		return ResponseEntity.ok().body(list);
-		
 	}
+	
+	
 
 }
