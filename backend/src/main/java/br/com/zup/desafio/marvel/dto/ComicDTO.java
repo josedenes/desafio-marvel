@@ -1,38 +1,26 @@
-
-package br.com.zup.desafio.marvel.entities;
+package br.com.zup.desafio.marvel.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import br.com.zup.desafio.marvel.entities.Comic;
 
-@Entity
-@Table(name = "tb_comic")
-public class Comic implements Serializable {
+
+public class ComicDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long comicId;
 	private String titulo;
 	private Double preco;
 	private String autores;
 	private Long isbn;
-	
-	@Column(columnDefinition = "TEXT")
 	private String descricao;
 	private Boolean aplicaDesconto;
-
-	public Comic() {
-
+	
+	public ComicDTO() {
+		
 	}
 
-	public Comic(Long comicId, String titulo, Double preco, String autores, Long isbn, String descricao,
+	public ComicDTO(Long comicId, String titulo, Double preco, String autores, Long isbn, String descricao,
 			Boolean aplicaDesconto) {
 		this.comicId = comicId;
 		this.titulo = titulo;
@@ -41,6 +29,16 @@ public class Comic implements Serializable {
 		this.isbn = isbn;
 		this.descricao = descricao;
 		this.aplicaDesconto = aplicaDesconto;
+	}
+	
+	public ComicDTO(Comic entity) {
+		this.comicId = entity.getComicId();
+		this.titulo = entity.getTitulo();
+		this.preco = entity.getPreco();
+		this.autores = entity.getAutores();
+		this.isbn = entity.getIsbn();
+		this.descricao = entity.getDescricao();
+		this.aplicaDesconto = entity.getAplicaDesconto();
 	}
 
 	public Long getComicId() {
@@ -99,20 +97,4 @@ public class Comic implements Serializable {
 		this.aplicaDesconto = aplicaDesconto;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(comicId);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Comic other = (Comic) obj;
-		return Objects.equals(comicId, other.comicId);
-	}
 }
