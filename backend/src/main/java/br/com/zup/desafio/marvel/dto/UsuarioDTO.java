@@ -5,6 +5,7 @@ import java.time.Instant;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -28,7 +29,7 @@ public class UsuarioDTO implements Serializable{
 	@CPF(message = "Por favor entrar com cpf válido")
 	private String cpf;
 	
-//	@NotBlank(message = "Campo data de nascimento obrigatório")
+	@NotNull(message = "Campo data de nascimento obrigatório")
 	private Instant dataNascimento;
 	
 	public UsuarioDTO() {

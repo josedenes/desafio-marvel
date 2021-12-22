@@ -41,6 +41,11 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
 		if (usuario != null && userId != usuario.getId()) {
 			list.add(new FieldMessage("email", "Email já existe no banco"));
 		}
+		
+		Usuario usuarioCpf = repository.findByCpf(dto.getCpf());
+		if (usuarioCpf != null && userId != usuarioCpf.getId()) {
+			list.add(new FieldMessage("cpf", "Cpf já existe no banco"));
+		}
 
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();

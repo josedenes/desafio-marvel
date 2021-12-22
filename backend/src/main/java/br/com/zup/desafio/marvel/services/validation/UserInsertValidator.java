@@ -33,6 +33,11 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
 		if (usuario != null) {
 			list.add(new FieldMessage("email", "Email já existe no banco"));
 		}
+		
+		Usuario usuarioCpf = repository.findByCpf(dto.getCpf());
+		if (usuarioCpf != null) {
+			list.add(new FieldMessage("cpf", "Cpf já existe no banco"));
+		}
 
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
