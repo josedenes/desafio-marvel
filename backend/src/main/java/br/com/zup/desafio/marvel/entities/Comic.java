@@ -22,7 +22,7 @@ public class Comic implements Serializable {
 	private String titulo;
 	private Double preco;
 	private String autores;
-	private Long isbn;
+	private String isbn;
 	
 	@Column(columnDefinition = "TEXT")
 	private String descricao;
@@ -32,7 +32,7 @@ public class Comic implements Serializable {
 
 	}
 
-	public Comic(Long comicId, String titulo, Double preco, String autores, Long isbn, String descricao,
+	public Comic(Long comicId, String titulo, Double preco, String autores, String isbn, String descricao,
 			Boolean aplicaDesconto) {
 		this.comicId = comicId;
 		this.titulo = titulo;
@@ -75,11 +75,11 @@ public class Comic implements Serializable {
 		this.autores = autores;
 	}
 
-	public Long getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(Long isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 

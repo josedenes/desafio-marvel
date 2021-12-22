@@ -12,7 +12,7 @@ public class ComicDTO implements Serializable{
 	private String titulo;
 	private Double preco;
 	private String autores;
-	private Long isbn;
+	private String isbn;
 	private String descricao;
 	private Boolean aplicaDesconto;
 	
@@ -20,7 +20,7 @@ public class ComicDTO implements Serializable{
 		
 	}
 
-	public ComicDTO(Long comicId, String titulo, Double preco, String autores, Long isbn, String descricao,
+	public ComicDTO(Long comicId, String titulo, Double preco, String autores, String isbn, String descricao,
 			Boolean aplicaDesconto) {
 		this.comicId = comicId;
 		this.titulo = titulo;
@@ -73,11 +73,11 @@ public class ComicDTO implements Serializable{
 		this.autores = autores;
 	}
 
-	public Long getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(Long isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 

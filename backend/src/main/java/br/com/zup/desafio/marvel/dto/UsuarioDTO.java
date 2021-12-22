@@ -3,15 +3,30 @@ package br.com.zup.desafio.marvel.dto;
 import java.io.Serializable;
 import java.time.Instant;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.br.CPF;
+
 import br.com.zup.desafio.marvel.entities.Usuario;
 
 public class UsuarioDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
+	@NotBlank(message = "Campo nome obrigatório")
 	private String nome;
+	
+	@NotBlank(message = "Campo email obrigatório")
+	@Email(message = "Por favor entrar com email válido")
 	private String email;
+	
+	@NotBlank(message = "Campo cpf obrigatório")
+	@CPF(message = "Por favor entrar com cpf válido")
 	private String cpf;
+	
+//	@NotBlank(message = "Campo data de nascimento obrigatório")
 	private Instant dataNascimento;
 	
 	public UsuarioDTO() {
