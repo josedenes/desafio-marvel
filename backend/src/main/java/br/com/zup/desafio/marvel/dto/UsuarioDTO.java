@@ -10,6 +10,8 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.zup.desafio.marvel.entities.Usuario;
 
+
+
 public class UsuarioDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

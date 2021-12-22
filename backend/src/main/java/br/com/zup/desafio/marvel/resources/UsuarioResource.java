@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.zup.desafio.marvel.dto.UsuarioAtualizarDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioDTO;
+import br.com.zup.desafio.marvel.dto.UsuarioInserirDTO;
 import br.com.zup.desafio.marvel.services.UsuarioService;
 
 
@@ -42,17 +44,17 @@ public class UsuarioResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UsuarioDTO> insert(@Valid @RequestBody UsuarioDTO dto){
-		dto = service.insert(dto);
+	public ResponseEntity<UsuarioDTO> insert(@Valid @RequestBody UsuarioInserirDTO dto){
+		UsuarioDTO newDto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(dto.getId()).toUri();
-		return ResponseEntity.created(uri).body(dto);
+				.buildAndExpand(newDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(newDto);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @Valid @RequestBody UsuarioDTO dto){
-		dto = service.update(id, dto);
-		return ResponseEntity.ok().body(dto);
+	public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @Valid @RequestBody UsuarioAtualizarDTO dto){
+		UsuarioDTO newDto = service.update(id, dto);
+		return ResponseEntity.ok().body(newDto);
 	}
 	
 	@DeleteMapping(value = "/{id}")

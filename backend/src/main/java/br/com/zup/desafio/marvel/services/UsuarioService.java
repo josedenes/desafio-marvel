@@ -12,7 +12,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.zup.desafio.marvel.dto.UsuarioAtualizarDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioDTO;
+import br.com.zup.desafio.marvel.dto.UsuarioInserirDTO;
 import br.com.zup.desafio.marvel.entities.Usuario;
 import br.com.zup.desafio.marvel.repositories.UsuarioRepository;
 import br.com.zup.desafio.marvel.services.exceptions.DatabaseException;
@@ -38,7 +40,8 @@ public class UsuarioService {
 	}
 	
 	@Transactional
-	public UsuarioDTO insert(UsuarioDTO dto) {
+	public UsuarioDTO insert(UsuarioInserirDTO dto) {
+//	public UsuarioDTO insert(UsuarioDTO dto) {
 		Usuario entity = new Usuario();
 		entity.setNome(dto.getNome());
 		entity.setEmail(dto.getEmail());
@@ -49,7 +52,7 @@ public class UsuarioService {
 	}
 	
 	@Transactional
-	public UsuarioDTO update(Long id, UsuarioDTO dto) {
+	public UsuarioDTO update(Long id, UsuarioAtualizarDTO dto) {
 		try {
 			Usuario entity = repository.getOne(id);
 			entity.setNome(dto.getNome());
