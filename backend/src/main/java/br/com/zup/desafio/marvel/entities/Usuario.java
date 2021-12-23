@@ -1,7 +1,7 @@
 package br.com.zup.desafio.marvel.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -10,6 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
@@ -28,14 +32,18 @@ public class Usuario implements Serializable{
 	@Column(unique = true)
 	private String cpf;
 	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant dataNascimento;
+//	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+//	private Instant dataNascimento;
+	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date dataNascimento;
 	
 	public Usuario() {
 		
 	}
 
-	public Usuario(Long id, String nome, String email, String cpf, Instant dataNascimento) {
+//	public Usuario(Long id, String nome, String email, String cpf, Instant dataNascimento) {
+	public Usuario(Long id, String nome, String email, String cpf, Date dataNascimento) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -75,11 +83,20 @@ public class Usuario implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public Instant getDataNascimento() {
+//	public Instant getDataNascimento() {
+//		return dataNascimento;
+//	}
+	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Instant dataNascimento) {
+//	public void setDataNascimento(Instant dataNascimento) {
+//		this.dataNascimento = dataNascimento;
+//	}
+	
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
