@@ -18,6 +18,7 @@ public class ResultsResponse {
 	@JsonProperty("description")
 	private String description;
 	
+	
 	private List<PriceResponse> prices;
 
 	public ResultsResponse(Integer comicId, String title, String isbn, String description, List<PriceResponse> prices) {
