@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.zup.desafio.marvel.api.SolicitarComic;
+import br.com.zup.desafio.marvel.api.response.ResultsResponse;
 import br.com.zup.desafio.marvel.dto.ComicDTO;
 import br.com.zup.desafio.marvel.services.ComicService;
 
@@ -25,6 +27,9 @@ public class ComicResource {
 	
 	@Autowired
 	private ComicService service;
+	
+	@Autowired
+	private SolicitarComic solicitarComic;
 	
 	@GetMapping
 	public ResponseEntity<List<ComicDTO>> findAll(){
@@ -38,6 +43,15 @@ public class ComicResource {
 		ComicDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
+	
+	
+	//testando requisicao na api marvel
+	@GetMapping(value = "/marvel/{comicId}")
+	public ResultsResponse testandoApi(@PathVariable Integer comicId) {
+		return solicitarComic.buscaComicPorId(comicId);
+	}
+	
+	
 	
 	@PostMapping
 	public ResponseEntity<ComicDTO> insert(@RequestBody ComicDTO dto){
