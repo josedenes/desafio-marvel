@@ -24,7 +24,7 @@ public class SolicitarComic {
 	private String privateKey;
 	
 	
-	public ResultsResponse buscaComicPorId(Integer id) {
+	public ResultsResponse buscaComicPorId(Long id) {
 		var dataAtual = String.valueOf(System.currentTimeMillis());
 		var response = marvelComicsClient.findComicsPorId(id, dataAtual, publicKey, hash(dataAtual)).getBody();
 		return response.getResult();

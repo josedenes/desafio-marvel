@@ -2,13 +2,17 @@ package br.com.zup.desafio.marvel.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,6 +41,9 @@ public class Usuario implements Serializable{
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
+	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	private List <Comic> comics;
 	
 	public Usuario() {
 		
@@ -98,6 +105,16 @@ public class Usuario implements Serializable{
 	
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	
+	
+	
+	public List<Comic> getComics() {
+		return comics;
+	}
+
+	public void setComics(List<Comic> comics) {
+		this.comics = comics;
 	}
 
 	@Override

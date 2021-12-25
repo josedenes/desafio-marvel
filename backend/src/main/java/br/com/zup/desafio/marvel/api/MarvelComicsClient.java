@@ -13,7 +13,7 @@ public interface MarvelComicsClient {
 	
 	@GetMapping("/{id}")
 	ResponseEntity<ComicsResponse> findComicsPorId(
-			@PathVariable Integer id,
+			@PathVariable Long id,
 			@RequestParam String ts,
             @RequestParam String apikey,
             @RequestParam String hash);

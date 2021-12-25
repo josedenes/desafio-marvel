@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import br.com.zup.desafio.marvel.api.SolicitarComic;
 import br.com.zup.desafio.marvel.api.response.ResultsResponse;
 import br.com.zup.desafio.marvel.dto.ComicDTO;
@@ -47,19 +49,36 @@ public class ComicResource {
 	
 	//testando requisicao na api marvel
 	@GetMapping(value = "/marvel/{comicId}")
-	public ResultsResponse testandoApi(@PathVariable Integer comicId) {
+	public ResultsResponse testandoApi(@PathVariable Long comicId) {
 		return solicitarComic.buscaComicPorId(comicId);
 	}
 	
 	
 	
 	@PostMapping
-	public ResponseEntity<ComicDTO> insert(@RequestBody ComicDTO dto){
-		dto = service.insert(dto);
+	public ResponseEntity<ComicDTO> insert(@RequestBody ObjectNode objectNode){
+		
+		Long comicId = objectNode.get("comicId").asLong();
+		Long usuarioId = objectNode.get("usuarioId").asLong();
+		
+		ComicDTO dto = service.insert(comicId, usuarioId);
+				
+//		return solicitarComic.buscaComicPorId(comicId);
+//		
+//		dto = service.insert(dto);
+//		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getComicId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
+	
+//	@PostMapping
+//	public ResponseEntity<ComicDTO> insert(@RequestBody ComicDTO dto){
+//		dto = service.insert(dto);
+//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+//				.buildAndExpand(dto.getComicId()).toUri();
+//		return ResponseEntity.created(uri).body(dto);
+//	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<ComicDTO> update(@PathVariable Long id, @RequestBody ComicDTO dto){

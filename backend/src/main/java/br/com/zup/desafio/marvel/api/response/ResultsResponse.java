@@ -7,7 +7,8 @@ import java.util.List;
 public class ResultsResponse {
 
 	@JsonProperty("id")
-	private Integer comicId;
+	private Long comicId;
+//	private Integer comicId;
 
 	@JsonProperty("title")
 	private String title;
@@ -21,7 +22,7 @@ public class ResultsResponse {
 	
 	private List<PriceResponse> prices;
 
-	public ResultsResponse(Integer comicId, String title, String isbn, String description, List<PriceResponse> prices) {
+	public ResultsResponse(Long comicId, String title, String isbn, String description, List<PriceResponse> prices) {
 		super();
 		this.comicId = comicId;
 		this.title = title;
@@ -30,7 +31,7 @@ public class ResultsResponse {
 		this.prices = prices;
 	}
 	
-	public Integer getComicId() {
+	public Long getComicId() {
         return comicId;
     }
 

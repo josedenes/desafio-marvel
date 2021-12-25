@@ -2,7 +2,9 @@ package br.com.zup.desafio.marvel.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.zup.desafio.marvel.entities.Comic;
 import br.com.zup.desafio.marvel.entities.Usuario;
 
 
@@ -40,6 +43,8 @@ public class UsuarioDTO implements Serializable{
 	@NotNull(message = "Campo data de nascimento obrigatório")
 	private Date dataNascimento;
 	
+//	private List <ComicDTO> comics = new ArrayList<>();
+	
 	public UsuarioDTO() {
 		
 	}
@@ -60,6 +65,11 @@ public class UsuarioDTO implements Serializable{
 		this.cpf = entity.getCpf();
 		this.dataNascimento = entity.getDataNascimento();
 	}
+	
+//	public UsuarioDTO(Usuario entity, List <Comic> comics) {
+//		this(entity);
+//		comics.forEach(comic -> this.comics.add(new ComicDTO(comic)));
+//	}
 
 	public Long getId() {
 		return id;
@@ -109,5 +119,14 @@ public class UsuarioDTO implements Serializable{
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+
+//	public List<ComicDTO> getComics() {
+//		return comics;
+//	}
+//
+//	public void setComics(List<ComicDTO> comics) {
+//		this.comics = comics;
+//	}
+	
 	
 }

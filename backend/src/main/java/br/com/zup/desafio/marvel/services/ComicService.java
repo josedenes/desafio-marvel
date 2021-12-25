@@ -12,9 +12,13 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.zup.desafio.marvel.api.SolicitarComic;
+import br.com.zup.desafio.marvel.api.response.ResultsResponse;
 import br.com.zup.desafio.marvel.dto.ComicDTO;
 import br.com.zup.desafio.marvel.entities.Comic;
+import br.com.zup.desafio.marvel.entities.Usuario;
 import br.com.zup.desafio.marvel.repositories.ComicRepository;
+import br.com.zup.desafio.marvel.repositories.UsuarioRepository;
 import br.com.zup.desafio.marvel.services.exceptions.DatabaseException;
 import br.com.zup.desafio.marvel.services.exceptions.ResourceNotFoundException;
 
@@ -23,6 +27,12 @@ public class ComicService {
 	
 	@Autowired
 	private ComicRepository repository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private SolicitarComic solicitarComic;
 	
 	@Transactional(readOnly = true)
 	public List<ComicDTO> findAll(){
@@ -37,26 +47,56 @@ public class ComicService {
 		return new ComicDTO(entity);
 	}
 	
+	
 	@Transactional
-	public ComicDTO insert(ComicDTO dto) {
+	public ComicDTO insert(Long comicId, Long usuarioId) {
+		
+		Optional<Usuario> obj = usuarioRepository.findById(usuarioId); 
+		Usuario entityUsuario = obj.orElseThrow(() -> new ResourceNotFoundException("Usuario nao encontrada"));
+		
+		ResultsResponse resposta = solicitarComic.buscaComicPorId(comicId);
+		
 		Comic entity = new Comic();
-		entity.setTitulo(dto.getTitulo());
-		entity.setPreco(dto.getPreco());
-		entity.setAutores(dto.getAutores());
-		entity.setIsbn(dto.getIsbn());
-		entity.setAplicaDesconto(dto.getAplicaDesconto());
+		//acrescentado
+		entity.setComicId(resposta.getComicId());
+		entity.setTitulo(resposta.getTitle());
+		entity.setPreco(resposta.getPrice());
+//		entity.setAutores(dto.getAutores());
+		entity.setIsbn(resposta.getIsbn());
+		entity.setDescricao(resposta.getDescription());
+//		entity.setAplicaDesconto(dto.getAplicaDesconto());
+		entity.setUsuario(entityUsuario);
 		entity = repository.save(entity);
 		return new ComicDTO(entity);
 	}
+	
+	
+//	@Transactional
+//	public ComicDTO insert(ComicDTO dto) {
+//		Comic entity = new Comic();
+//		//acrescentado
+//		entity.setComicId(dto.getComicId());
+//		entity.setTitulo(dto.getTitulo());
+//		entity.setPreco(dto.getPreco());
+//		entity.setAutores(dto.getAutores());
+//		entity.setIsbn(dto.getIsbn());
+//		entity.setDescricao(dto.getDescricao());
+//		entity.setAplicaDesconto(dto.getAplicaDesconto());
+//		entity = repository.save(entity);
+//		return new ComicDTO(entity);
+//	}
 	
 	@Transactional
 	public ComicDTO update(Long id, ComicDTO dto) {
 		try {
 			Comic entity = repository.getOne(id);
+			//acrescentado
+			entity.setComicId(dto.getComicId());
 			entity.setTitulo(dto.getTitulo());
 			entity.setPreco(dto.getPreco());
 			entity.setAutores(dto.getAutores());
 			entity.setIsbn(dto.getIsbn());
+			entity.setDescricao(dto.getDescricao());
 			entity.setAplicaDesconto(dto.getAplicaDesconto());
 			entity = repository.save(entity);
 			return new ComicDTO(entity);

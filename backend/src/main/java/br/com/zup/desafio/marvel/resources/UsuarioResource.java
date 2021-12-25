@@ -2,6 +2,7 @@ package br.com.zup.desafio.marvel.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.zup.desafio.marvel.dto.ComicDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioAtualizarDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioInserirDTO;
+import br.com.zup.desafio.marvel.repositories.ComicRepository;
 import br.com.zup.desafio.marvel.services.UsuarioService;
 
 
@@ -29,6 +32,9 @@ public class UsuarioResource {
 	
 	@Autowired
 	private UsuarioService service;
+	
+//	@Autowired
+//	private ComicRepository comicRepository;
 	
 	@GetMapping
 	public ResponseEntity<List<UsuarioDTO>> findAll(){
@@ -40,6 +46,16 @@ public class UsuarioResource {
 	public ResponseEntity<UsuarioDTO> findById(@PathVariable Long id){
 		
 		UsuarioDTO dto = service.findById(id);
+		return ResponseEntity.ok().body(dto);
+	}
+	
+	@GetMapping(value = "/{id}/comics")
+	public ResponseEntity<List<ComicDTO>> findComicsByIdUsuario(@PathVariable Long id){
+		
+		//colocar aqui validacao se usuario esta cadastrado
+		
+		List<ComicDTO> dto = service.findComicsPorIdUsuario(id);
+//		var listaComics = comicRepository.findByUsuarioId(id);
 		return ResponseEntity.ok().body(dto);
 	}
 	

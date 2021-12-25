@@ -12,10 +12,13 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.zup.desafio.marvel.dto.ComicDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioAtualizarDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioInserirDTO;
+import br.com.zup.desafio.marvel.entities.Comic;
 import br.com.zup.desafio.marvel.entities.Usuario;
+import br.com.zup.desafio.marvel.repositories.ComicRepository;
 import br.com.zup.desafio.marvel.repositories.UsuarioRepository;
 import br.com.zup.desafio.marvel.services.exceptions.DatabaseException;
 import br.com.zup.desafio.marvel.services.exceptions.ResourceNotFoundException;
@@ -26,6 +29,9 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
+	@Autowired
+	private ComicRepository comicRepository;
+	
 	@Transactional(readOnly = true)
 	public List<UsuarioDTO> findAll(){
 		List<Usuario> list = repository.findAll();
@@ -35,8 +41,14 @@ public class UsuarioService {
 	@Transactional(readOnly = true)
 	public UsuarioDTO findById(Long id) {
 		Optional<Usuario> obj = repository.findById(id); 
-		Usuario entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade nao encontrada"));
+		Usuario entity = obj.orElseThrow(() -> new ResourceNotFoundException("Usuario nao encontrada"));
 		return new UsuarioDTO(entity);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<ComicDTO> findComicsPorIdUsuario(Long id){
+		List<Comic> list = comicRepository.findByUsuarioId(id);
+		return list.stream().map(x -> new ComicDTO(x)).collect(Collectors.toList());
 	}
 	
 	@Transactional

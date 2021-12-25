@@ -2,18 +2,30 @@ package br.com.zup.desafio.marvel.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 import br.com.zup.desafio.marvel.entities.Comic;
 
 
 public class ComicDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@NotBlank(message = "Campo comicId obrigatório")
 	private Long comicId;
+	
+	@NotBlank(message = "Campo titulo obrigatório")
 	private String titulo;
+	
+	@NotBlank(message = "Campo preço obrigatório")
 	private Double preco;
+	
 	private String autores;
+	
+	@NotBlank(message = "Campo isbn obrigatório")
 	private String isbn;
+	
 	private String descricao;
+	
 	private Boolean aplicaDesconto;
 	
 	public ComicDTO() {

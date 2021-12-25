@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,23 +19,31 @@ public class Comic implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long comicId;
 	private String titulo;
 	private Double preco;
 	private String autores;
+	
+	@Column(unique = true)
 	private String isbn;
 	
 	@Column(columnDefinition = "TEXT")
 	private String descricao;
 	private Boolean aplicaDesconto;
-
+	
+	@ManyToOne
+	@JoinColumn(name="usuario_id")
+	private Usuario usuario;
+	
 	public Comic() {
 
 	}
 
+//	public Comic(Long comicId, String titulo, Double preco, String autores, String isbn, String descricao,
+//			Boolean aplicaDesconto) {
 	public Comic(Long comicId, String titulo, Double preco, String autores, String isbn, String descricao,
-			Boolean aplicaDesconto) {
+			Boolean aplicaDesconto, Usuario usuario) {
 		this.comicId = comicId;
 		this.titulo = titulo;
 		this.preco = preco;
@@ -41,6 +51,8 @@ public class Comic implements Serializable {
 		this.isbn = isbn;
 		this.descricao = descricao;
 		this.aplicaDesconto = aplicaDesconto;
+		//atributo acrescentado
+		this.usuario = usuario;
 	}
 
 	public Long getComicId() {
@@ -98,6 +110,17 @@ public class Comic implements Serializable {
 	public void setAplicaDesconto(Boolean aplicaDesconto) {
 		this.aplicaDesconto = aplicaDesconto;
 	}
+	
+	//acrescentado
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	//ate aqui
+	
 
 	@Override
 	public int hashCode() {
