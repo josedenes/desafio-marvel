@@ -56,15 +56,16 @@ public class ComicService {
 		
 		ResultsResponse resposta = solicitarComic.buscaComicPorId(comicId);
 		
+				
 		Comic entity = new Comic();
 		//acrescentado
 		entity.setComicId(resposta.getComicId());
 		entity.setTitulo(resposta.getTitle());
 		entity.setPreco(resposta.getPrice());
-//		entity.setAutores(dto.getAutores());
+		entity.setAutores(resposta.getCreators());
 		entity.setIsbn(resposta.getIsbn());
 		entity.setDescricao(resposta.getDescription());
-//		entity.setAplicaDesconto(dto.getAplicaDesconto());
+		entity.setAplicaDesconto(false);
 		entity.setUsuario(entityUsuario);
 		entity = repository.save(entity);
 		return new ComicDTO(entity);

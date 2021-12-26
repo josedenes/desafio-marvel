@@ -1,5 +1,8 @@
 package br.com.zup.desafio.marvel.services;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,11 +48,87 @@ public class UsuarioService {
 		return new UsuarioDTO(entity);
 	}
 	
+	//estava assim antes de acrescentar o calculo de desconto
+//	@Transactional(readOnly = true)
+//	public List<ComicDTO> findComicsPorIdUsuario(Long id){
+//		List<Comic> list = comicRepository.findByUsuarioId(id);
+//		return list.stream().map(x -> new ComicDTO(x)).collect(Collectors.toList());
+//	}
+	
+	
 	@Transactional(readOnly = true)
 	public List<ComicDTO> findComicsPorIdUsuario(Long id){
 		List<Comic> list = comicRepository.findByUsuarioId(id);
-		return list.stream().map(x -> new ComicDTO(x)).collect(Collectors.toList());
+//		DayOfWeek data = LocalDate.now().getDayOfWeek();
+		
+		List<ComicDTO> listComicDTO = new ArrayList<>();
+		
+		for (Comic comic: list) {
+			
+			comic.setAplicaDesconto(descontoAtivado(comic.getIsbn()));;
+			
+			if(comic.getAplicaDesconto()) {
+				comic.setPreco(comic.getPreco()*0.9);
+			}
+			
+			listComicDTO.add(new ComicDTO(comic.getComicId(), comic.getTitulo(), comic.getPreco(), comic.getAutores(), comic.getIsbn(), comic.getDescricao(), comic.getAplicaDesconto()));	
+		}
+		
+		return listComicDTO;
+//		return list.stream().map(x -> new ComicDTO(x)).collect(Collectors.toList());
 	}
+	
+	
+	public Boolean descontoAtivado(String isbn){
+		DayOfWeek data = LocalDate.now().getDayOfWeek();
+		
+		int len = isbn.length();
+		char lastChar = isbn.charAt(len - 1);
+		String lastCharString = ""+lastChar;
+		
+		int digitoFinalIsbn = Integer.parseInt(lastCharString);
+		
+		int diaDaSemanaIsbn;
+		
+		if (digitoFinalIsbn == 0 || digitoFinalIsbn == 1) {
+			diaDaSemanaIsbn = 1;
+        } else if (digitoFinalIsbn == 2 || digitoFinalIsbn == 3) {
+        	diaDaSemanaIsbn = 2;
+        } else if (digitoFinalIsbn == 4 || digitoFinalIsbn == 5) {
+        	diaDaSemanaIsbn = 3;
+        } else if (digitoFinalIsbn == 6 || digitoFinalIsbn == 7) {
+        	diaDaSemanaIsbn = 4;
+        } else {
+        	diaDaSemanaIsbn = 5;
+        }
+		
+		int diaDaRequisicao = data.getValue();
+//		diaDaRequisicao = diaDaRequisicao - 4;
+//		diaDaRequisicao = diaDaRequisicao - 1;
+		
+		if(diaDaRequisicao == diaDaSemanaIsbn) {
+			return true;
+		}else {
+			return false;
+		}
+		
+//		String b = ""+lastChar;
+//		b = ""+data.getValue();
+//		comic.setIsbn(b);
+		
+		
+//		int diaDasemana = data.getValue();
+//		
+//		diaDasemana = diaDasemana - 4;
+//		
+		
+		
+//		if((diaDasemana - (lastChar - '0' + 2)/2) == 1) {
+//			comic.setAplicaDesconto(true);
+//		}
+		
+	}
+	
 	
 	@Transactional
 	public UsuarioDTO insert(UsuarioInserirDTO dto) {
@@ -91,6 +170,5 @@ public class UsuarioService {
 			throw new DatabaseException("Violacao de integridade");
 		}
 	}
-	
-	
+
 }

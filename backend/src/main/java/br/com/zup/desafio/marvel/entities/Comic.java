@@ -23,6 +23,8 @@ public class Comic implements Serializable {
 	private Long comicId;
 	private String titulo;
 	private Double preco;
+	
+	@Column(columnDefinition = "TEXT")
 	private String autores;
 	
 	@Column(unique = true)
@@ -30,6 +32,7 @@ public class Comic implements Serializable {
 	
 	@Column(columnDefinition = "TEXT")
 	private String descricao;
+	
 	private Boolean aplicaDesconto;
 	
 	@ManyToOne

@@ -98,7 +98,7 @@ public class Usuario implements Serializable{
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
-
+	
 //	public void setDataNascimento(Instant dataNascimento) {
 //		this.dataNascimento = dataNascimento;
 //	}
