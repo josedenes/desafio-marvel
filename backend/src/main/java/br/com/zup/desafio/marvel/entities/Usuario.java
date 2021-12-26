@@ -8,7 +8,6 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,10 +34,7 @@ public class Usuario implements Serializable{
 	
 	@Column(unique = true)
 	private String cpf;
-	
-//	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-//	private Instant dataNascimento;
-	
+		
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	
@@ -49,7 +45,6 @@ public class Usuario implements Serializable{
 		
 	}
 
-//	public Usuario(Long id, String nome, String email, String cpf, Instant dataNascimento) {
 	public Usuario(Long id, String nome, String email, String cpf, Date dataNascimento) {
 		this.id = id;
 		this.nome = nome;
@@ -90,24 +85,14 @@ public class Usuario implements Serializable{
 		this.cpf = cpf;
 	}
 
-//	public Instant getDataNascimento() {
-//		return dataNascimento;
-//	}
-	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 	
-//	public void setDataNascimento(Instant dataNascimento) {
-//		this.dataNascimento = dataNascimento;
-//	}
-	
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	
-	
 	
 	public List<Comic> getComics() {
 		return comics;
@@ -133,6 +118,4 @@ public class Usuario implements Serializable{
 		Usuario other = (Usuario) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 }

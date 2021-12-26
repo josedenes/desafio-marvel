@@ -8,13 +8,12 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.zup.desafio.marvel.dto.UsuarioDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioInserirDTO;
 import br.com.zup.desafio.marvel.entities.Usuario;
 import br.com.zup.desafio.marvel.repositories.UsuarioRepository;
 import br.com.zup.desafio.marvel.resources.exceptions.FieldMessage;
 
-//public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UsuarioDTO> {
+
 public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UsuarioInserirDTO> {
 
 	@Autowired

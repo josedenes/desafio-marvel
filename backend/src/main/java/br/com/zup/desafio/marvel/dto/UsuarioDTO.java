@@ -1,10 +1,7 @@
 package br.com.zup.desafio.marvel.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,7 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.zup.desafio.marvel.entities.Comic;
 import br.com.zup.desafio.marvel.entities.Usuario;
 
 
@@ -36,20 +32,15 @@ public class UsuarioDTO implements Serializable{
 	@CPF(message = "Por favor entrar com cpf válido")
 	private String cpf;
 	
-//	@NotNull(message = "Campo data de nascimento obrigatório")
-//	private Instant dataNascimento;
-	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotNull(message = "Campo data de nascimento obrigatório")
 	private Date dataNascimento;
 	
-//	private List <ComicDTO> comics = new ArrayList<>();
 	
 	public UsuarioDTO() {
 		
 	}
 
-//	public UsuarioDTO(Long id, String nome, String email, String cpf, Instant dataNascimento) {
 	public UsuarioDTO(Long id, String nome, String email, String cpf, Date dataNascimento) {
 		this.id = id;
 		this.nome = nome;
@@ -66,11 +57,6 @@ public class UsuarioDTO implements Serializable{
 		this.dataNascimento = entity.getDataNascimento();
 	}
 	
-//	public UsuarioDTO(Usuario entity, List <Comic> comics) {
-//		this(entity);
-//		comics.forEach(comic -> this.comics.add(new ComicDTO(comic)));
-//	}
-
 	public Long getId() {
 		return id;
 	}
@@ -102,31 +88,13 @@ public class UsuarioDTO implements Serializable{
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-
-//	public Instant getDataNascimento() {
-//		return dataNascimento;
-//	}
 	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-//	public void setDataNascimento(Instant dataNascimento) {
-//		this.dataNascimento = dataNascimento;
-//	}
-	
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-
-//	public List<ComicDTO> getComics() {
-//		return comics;
-//	}
-//
-//	public void setComics(List<ComicDTO> comics) {
-//		this.comics = comics;
-//	}
-	
-	
 }

@@ -58,6 +58,10 @@ public class UsuarioService {
 	
 	@Transactional(readOnly = true)
 	public List<ComicDTO> findComicsPorIdUsuario(Long id){
+		
+		Optional<Usuario> obj = repository.findById(id); 
+		Usuario entity = obj.orElseThrow(() -> new ResourceNotFoundException("Usuario nao encontrada"));
+		
 		List<Comic> list = comicRepository.findByUsuarioId(id);
 //		DayOfWeek data = LocalDate.now().getDayOfWeek();
 		
@@ -75,7 +79,6 @@ public class UsuarioService {
 		}
 		
 		return listComicDTO;
-//		return list.stream().map(x -> new ComicDTO(x)).collect(Collectors.toList());
 	}
 	
 	

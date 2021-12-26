@@ -3,6 +3,8 @@ package br.com.zup.desafio.marvel.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,11 +49,11 @@ public class ComicResource {
 	}
 	
 	
-	//testando requisicao na api marvel
-	@GetMapping(value = "/marvel/{comicId}")
-	public ResultsResponse testandoApi(@PathVariable Long comicId) {
-		return solicitarComic.buscaComicPorId(comicId);
-	}
+//	//testando requisicao na api marvel
+//	@GetMapping(value = "/marvel/{comicId}")
+//	public ResultsResponse testandoApi(@PathVariable Long comicId) {
+//		return solicitarComic.buscaComicPorId(comicId);
+//	}
 	
 	
 	
@@ -61,8 +63,10 @@ public class ComicResource {
 		Long comicId = objectNode.get("comicId").asLong();
 		Long usuarioId = objectNode.get("usuarioId").asLong();
 		
-		ComicDTO dto = service.insert(comicId, usuarioId);
-				
+		
+		@Valid ComicDTO dto = service.insert(comicId, usuarioId);
+		
+		
 //		return solicitarComic.buscaComicPorId(comicId);
 //		
 //		dto = service.insert(dto);

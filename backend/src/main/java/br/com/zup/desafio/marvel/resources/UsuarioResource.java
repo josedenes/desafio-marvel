@@ -2,7 +2,6 @@ package br.com.zup.desafio.marvel.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -22,7 +21,6 @@ import br.com.zup.desafio.marvel.dto.ComicDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioAtualizarDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioDTO;
 import br.com.zup.desafio.marvel.dto.UsuarioInserirDTO;
-import br.com.zup.desafio.marvel.repositories.ComicRepository;
 import br.com.zup.desafio.marvel.services.UsuarioService;
 
 
@@ -33,8 +31,6 @@ public class UsuarioResource {
 	@Autowired
 	private UsuarioService service;
 	
-//	@Autowired
-//	private ComicRepository comicRepository;
 	
 	@GetMapping
 	public ResponseEntity<List<UsuarioDTO>> findAll(){
@@ -52,10 +48,7 @@ public class UsuarioResource {
 	@GetMapping(value = "/{id}/comics")
 	public ResponseEntity<List<ComicDTO>> findComicsByIdUsuario(@PathVariable Long id){
 		
-		//colocar aqui validacao se usuario esta cadastrado
-		
 		List<ComicDTO> dto = service.findComicsPorIdUsuario(id);
-//		var listaComics = comicRepository.findByUsuarioId(id);
 		return ResponseEntity.ok().body(dto);
 	}
 	

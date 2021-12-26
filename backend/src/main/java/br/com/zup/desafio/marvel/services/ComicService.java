@@ -21,6 +21,7 @@ import br.com.zup.desafio.marvel.repositories.ComicRepository;
 import br.com.zup.desafio.marvel.repositories.UsuarioRepository;
 import br.com.zup.desafio.marvel.services.exceptions.DatabaseException;
 import br.com.zup.desafio.marvel.services.exceptions.ResourceNotFoundException;
+import feign.FeignException;
 
 @Service
 public class ComicService {
@@ -54,9 +55,18 @@ public class ComicService {
 		Optional<Usuario> obj = usuarioRepository.findById(usuarioId); 
 		Usuario entityUsuario = obj.orElseThrow(() -> new ResourceNotFoundException("Usuario nao encontrada"));
 		
-		ResultsResponse resposta = solicitarComic.buscaComicPorId(comicId);
+//		ResultsResponse resposta = solicitarComic.buscaComicPorId(comicId);
+		ResultsResponse resposta;
 		
-				
+		try {
+			resposta = solicitarComic.buscaComicPorId(comicId);
+		}
+		catch(FeignException e) {
+			throw new ResourceNotFoundException("Id da comic nao encontrado: " + comicId);
+		}
+		
+		
+		
 		Comic entity = new Comic();
 		//acrescentado
 		entity.setComicId(resposta.getComicId());
@@ -103,7 +113,7 @@ public class ComicService {
 			return new ComicDTO(entity);
 		}
 		catch(EntityNotFoundException e) {
-			throw new ResourceNotFoundException("Id nao encontrado " + id);
+			throw new ResourceNotFoundException("Id nao encontrado: " + id);
 		}
 	}
 	
@@ -113,7 +123,7 @@ public class ComicService {
 			repository.deleteById(id);
 		}
 		catch(EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Id nao encontrado " + id);
+			throw new ResourceNotFoundException("Id nao encontrado: " + id);
 		}
 		catch(DataIntegrityViolationException e) {
 			throw new DatabaseException("Violacao de integridade");
