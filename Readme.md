@@ -12,4 +12,4 @@ Para executar o projeto é necessário a IDE Spring Tool Suite e seguir a sequê
 5. Para executar o projeto basta ir no menu ``` Run > Run As > 4 Spring Boot App ```
 
 ## Descrição completa
-[a relative link](Descricao_completa.pdf) 
+[link para descrição completa](Descricao_completa.pdf) 
