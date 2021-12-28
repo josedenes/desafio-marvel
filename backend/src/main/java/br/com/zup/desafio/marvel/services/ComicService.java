@@ -51,11 +51,9 @@ public class ComicService {
 	
 	@Transactional
 	public ComicDTO insert(Long comicId, Long usuarioId) {
-		
 		Optional<Usuario> obj = usuarioRepository.findById(usuarioId); 
 		Usuario entityUsuario = obj.orElseThrow(() -> new ResourceNotFoundException("Usuario nao encontrada"));
 		
-//		ResultsResponse resposta = solicitarComic.buscaComicPorId(comicId);
 		ResultsResponse resposta;
 		
 		try {
@@ -65,10 +63,7 @@ public class ComicService {
 			throw new ResourceNotFoundException("Id da comic nao encontrado: " + comicId);
 		}
 		
-		
-		
 		Comic entity = new Comic();
-		//acrescentado
 		entity.setComicId(resposta.getComicId());
 		entity.setTitulo(resposta.getTitle());
 		entity.setPreco(resposta.getPrice());

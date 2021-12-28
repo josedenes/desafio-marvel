@@ -49,40 +49,18 @@ public class ComicResource {
 	}
 	
 	
-//	//testando requisicao na api marvel
-//	@GetMapping(value = "/marvel/{comicId}")
-//	public ResultsResponse testandoApi(@PathVariable Long comicId) {
-//		return solicitarComic.buscaComicPorId(comicId);
-//	}
-	
-	
-	
 	@PostMapping
 	public ResponseEntity<ComicDTO> insert(@RequestBody ObjectNode objectNode){
-		
 		Long comicId = objectNode.get("comicId").asLong();
 		Long usuarioId = objectNode.get("usuarioId").asLong();
 		
-		
-		@Valid ComicDTO dto = service.insert(comicId, usuarioId);
-		
-		
-//		return solicitarComic.buscaComicPorId(comicId);
-//		
-//		dto = service.insert(dto);
-//		
+		ComicDTO dto = service.insert(comicId, usuarioId);
+				
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getComicId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
-//	@PostMapping
-//	public ResponseEntity<ComicDTO> insert(@RequestBody ComicDTO dto){
-//		dto = service.insert(dto);
-//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-//				.buildAndExpand(dto.getComicId()).toUri();
-//		return ResponseEntity.created(uri).body(dto);
-//	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<ComicDTO> update(@PathVariable Long id, @RequestBody ComicDTO dto){

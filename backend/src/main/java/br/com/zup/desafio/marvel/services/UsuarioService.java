@@ -35,6 +35,17 @@ public class UsuarioService {
 	@Autowired
 	private ComicRepository comicRepository;
 	
+	@Transactional
+	public UsuarioDTO insert(UsuarioInserirDTO dto) {
+		Usuario entity = new Usuario();
+		entity.setNome(dto.getNome());
+		entity.setEmail(dto.getEmail());
+		entity.setCpf(dto.getCpf());
+		entity.setDataNascimento(dto.getDataNascimento());
+		entity = repository.save(entity);
+		return new UsuarioDTO(entity);
+	}
+	
 	@Transactional(readOnly = true)
 	public List<UsuarioDTO> findAll(){
 		List<Usuario> list = repository.findAll();
@@ -58,39 +69,31 @@ public class UsuarioService {
 	
 	@Transactional(readOnly = true)
 	public List<ComicDTO> findComicsPorIdUsuario(Long id){
-		
 		Optional<Usuario> obj = repository.findById(id); 
 		Usuario entity = obj.orElseThrow(() -> new ResourceNotFoundException("Usuario nao encontrada"));
 		
 		List<Comic> list = comicRepository.findByUsuarioId(id);
-//		DayOfWeek data = LocalDate.now().getDayOfWeek();
-		
 		List<ComicDTO> listComicDTO = new ArrayList<>();
 		
 		for (Comic comic: list) {
-			
-			comic.setAplicaDesconto(descontoAtivado(comic.getIsbn()));;
-			
+			comic.setAplicaDesconto(descontoAtivado(comic.getIsbn()));;	
 			if(comic.getAplicaDesconto()) {
 				comic.setPreco(comic.getPreco()*0.9);
 			}
-			
-			listComicDTO.add(new ComicDTO(comic.getComicId(), comic.getTitulo(), comic.getPreco(), comic.getAutores(), comic.getIsbn(), comic.getDescricao(), comic.getAplicaDesconto()));	
+			listComicDTO.add(new ComicDTO(comic.getComicId(), comic.getTitulo(), comic.getPreco(), comic.getAutores(), 
+					comic.getIsbn(), comic.getDescricao(), comic.getAplicaDesconto()));	
 		}
-		
 		return listComicDTO;
 	}
 	
 	
 	public Boolean descontoAtivado(String isbn){
 		DayOfWeek data = LocalDate.now().getDayOfWeek();
-		
 		int len = isbn.length();
 		char lastChar = isbn.charAt(len - 1);
 		String lastCharString = ""+lastChar;
 		
 		int digitoFinalIsbn = Integer.parseInt(lastCharString);
-		
 		int diaDaSemanaIsbn;
 		
 		if (digitoFinalIsbn == 0 || digitoFinalIsbn == 1) {
@@ -106,44 +109,25 @@ public class UsuarioService {
         }
 		
 		int diaDaRequisicao = data.getValue();
-//		diaDaRequisicao = diaDaRequisicao - 4;
-//		diaDaRequisicao = diaDaRequisicao - 1;
-		
 		if(diaDaRequisicao == diaDaSemanaIsbn) {
 			return true;
 		}else {
 			return false;
 		}
-		
-//		String b = ""+lastChar;
-//		b = ""+data.getValue();
-//		comic.setIsbn(b);
-		
-		
-//		int diaDasemana = data.getValue();
-//		
-//		diaDasemana = diaDasemana - 4;
-//		
-		
-		
-//		if((diaDasemana - (lastChar - '0' + 2)/2) == 1) {
-//			comic.setAplicaDesconto(true);
-//		}
-		
 	}
 	
-	
-	@Transactional
-	public UsuarioDTO insert(UsuarioInserirDTO dto) {
-//	public UsuarioDTO insert(UsuarioDTO dto) {
-		Usuario entity = new Usuario();
-		entity.setNome(dto.getNome());
-		entity.setEmail(dto.getEmail());
-		entity.setCpf(dto.getCpf());
-		entity.setDataNascimento(dto.getDataNascimento());
-		entity = repository.save(entity);
-		return new UsuarioDTO(entity);
-	}
+//	// estava aqui antes
+//	@Transactional
+//	public UsuarioDTO insert(UsuarioInserirDTO dto) {
+////	public UsuarioDTO insert(UsuarioDTO dto) {
+//		Usuario entity = new Usuario();
+//		entity.setNome(dto.getNome());
+//		entity.setEmail(dto.getEmail());
+//		entity.setCpf(dto.getCpf());
+//		entity.setDataNascimento(dto.getDataNascimento());
+//		entity = repository.save(entity);
+//		return new UsuarioDTO(entity);
+//	}
 	
 	@Transactional
 	public UsuarioDTO update(Long id, UsuarioAtualizarDTO dto) {

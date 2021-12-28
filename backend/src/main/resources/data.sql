@@ -1,4 +1,4 @@
-INSERT INTO tb_usuario (nome, email, cpf, data_nascimento ) VALUES ('jose', 'jose@gmail.com', '000.010.000-00', TIMESTAMP WITH TIME ZONE '1991-09-05T20:50:07.12345Z');
+INSERT INTO tb_usuario (nome, email, cpf, data_nascimento ) VALUES ('lucas', 'lucas@gmail.com', '000.010.000-00', TIMESTAMP WITH TIME ZONE '1994-12-11T20:50:07.12345Z');
 INSERT INTO tb_usuario (nome, email, cpf, data_nascimento ) VALUES ('joao', 'joao@gmail.com', '002.000.000-00', TIMESTAMP WITH TIME ZONE '1992-06-15T20:50:07.12345Z');
 INSERT INTO tb_usuario (nome, email, cpf, data_nascimento ) VALUES ('pedro', 'pedro@gmail.com', '000.000.000-00', TIMESTAMP WITH TIME ZONE '1995-04-05T20:50:07.12345Z');
 

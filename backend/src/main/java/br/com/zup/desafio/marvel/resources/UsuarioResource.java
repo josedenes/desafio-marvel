@@ -45,13 +45,6 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(dto);
 	}
 	
-	@GetMapping(value = "/{id}/comics")
-	public ResponseEntity<List<ComicDTO>> findComicsByIdUsuario(@PathVariable Long id){
-		
-		List<ComicDTO> dto = service.findComicsPorIdUsuario(id);
-		return ResponseEntity.ok().body(dto);
-	}
-	
 	@PostMapping
 	public ResponseEntity<UsuarioDTO> insert(@Valid @RequestBody UsuarioInserirDTO dto){
 		UsuarioDTO newDto = service.insert(dto);
@@ -72,4 +65,10 @@ public class UsuarioResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@GetMapping(value = "/{id}/comics")
+	public ResponseEntity<List<ComicDTO>> findComicsByIdUsuario(@PathVariable Long id){
+		
+		List<ComicDTO> dto = service.findComicsPorIdUsuario(id);
+		return ResponseEntity.ok().body(dto);
+	}
 }
